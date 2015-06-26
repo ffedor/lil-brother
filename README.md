@@ -4,9 +4,11 @@ Li'l Brother tracks clicks on web pages, without blocking any interaction.
 
 ## Client
 
-Include the library:
+Include the files (assumes same directory strucrue as repo):
 ```
-<script type="text/javascript" src="http://server/lilbro.js"></script>
+<script type="text/javascript" src="http://server/lil-brother/client/src/LilBro.js"></script>
+<script type="text/javascript" src="http://server/lil-brother/client/src/LilBro.Schema.js"></script>
+<script type="text/javascript" src="http://server/lil-brother/client/src/LilBro.BrowserDetect.js"></script>
 ```
 
 Listen for clicks on the body:
@@ -15,7 +17,7 @@ var lilBro = new LilBro({
   element: document.body,
   server: 'server:8000',
   ssl_server: 'server:8443',
-  track_focus: true
+  watch_focus: true
 });
 ```
 ### LilBro Options
@@ -54,13 +56,13 @@ Write an event to the server.  Parameters are merged in with the event on its wa
 lilBro.write({event_type: 'page_load'});
 ```
 
-##### watch({ element: ..., callback: ... })
+##### watch({ element: ..., callback: ..., bubble: true|false })
 
 Listen for a specific event, and annotate the message with custom data.  For example:
 
 ```javascript
 // register a click handler that snakes some data from the DOM and specifies the the event type.
-// this wont bubble to the wrapper element being watched.
+// By default, this won't bubble to the wrapper element being watched.
 lilBro.watch({
   element: document.getElementById('search_button'),
   callback: function(e) {
